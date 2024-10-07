@@ -8,8 +8,15 @@ let spikesGroup; // Reference to the spikes group
 let zoom; // Store the zoom behavior for toggling
 let zoomGroup; // Reference to zoom group for toggling
 
+function updateSpikes() {
+    spikesGroup.selectAll("path")
+        .attr("display", d => activeEventTypes.has(d.event_type) ? "block" : "none")
+        .attr("fill-opacity", 0.5);
+}
+
+
 // Function to fetch data from Flask server (DuckDB)
-async function fetchDataFromDuckDB(eventType = null, startDate = null, endDate = null) {
+export async function fetchDataFromDuckDB(eventType = null, startDate = null, endDate = null) {
     try {
         let url = `${FLASK_SERVER_URL}?`;
         if (eventType) {
@@ -135,11 +142,6 @@ export function createSpikeMap(geojson, eventsData) {
         svg.call(zoom); // Re-enable zooming after brushing
     }
 
-    function updateSpikes() {
-        spikesGroup.selectAll("path")
-            .attr("display", d => activeEventTypes.has(d.event_type) ? "block" : "none")
-            .attr("fill-opacity", 0.5);
-    }
 
     function spike(length) {
         return `M0,0L2,${length}L-2,${length}Z`;

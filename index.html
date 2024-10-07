@@ -1,25 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ukraine Spike Map</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-    <!-- Include D3.js as a global script -->
+    <meta charset="utf-8">
+    <title>Ukraine Event Spike Map</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="module" src="map.js"></script>
 </head>
 <body>
-    <div id="map-container"></div> <!-- Container for the map -->
     <div id="controls">
-        <button id="toggle-brush">Toggle Brush</button>
-        <button id="clear-selection">Clear Selection</button>
+        <div>
+            <label for="event-type">Event Type:</label>
+            <select id="event-type">
+                <option value="Battles" selected>Battles</option>
+                <option value="Protests">Protests</option>
+                <option value="Riots">Riots</option>
+                <option value="Explosions/Remote violence">Explosions/Remote violence</option>
+                <option value="Strategic developments">Strategic developments</option>
+                <option value="Violence against civilians">Violence against civilians</option>
+            </select>
+
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date">
+
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date">
+
+            <button id="apply-filter">Apply Filter</button>
+        </div>
+
+        <div>
+            <button id="toggle-brush">Toggle Brushing</button>
+            <button id="clear-selection">Clear Selection</button>
+        </div>
+
+        <div id="legend">
+            <h3>Legend</h3>
+            <div>
+                <input type="checkbox" id="battles" value="Battles" checked>
+                <label for="battles">Battles</label>
+            </div>
+            <div>
+                <input type="checkbox" id="protests" value="Protests">
+                <label for="protests">Protests</label>
+            </div>
+            <div>
+                <input type="checkbox" id="riots" value="Riots">
+                <label for="riots">Riots</label>
+            </div>
+            <div>
+                <input type="checkbox" id="explosions" value="Explosions/Remote violence">
+                <label for="explosions">Explosions/Remote violence</label>
+            </div>
+            <div>
+                <input type="checkbox" id="strategic" value="Strategic developments">
+                <label for="strategic">Strategic developments</label>
+            </div>
+            <div>
+                <input type="checkbox" id="violence" value="Violence against civilians">
+                <label for="violence">Violence against civilians</label>
+            </div>
+        </div>
     </div>
 
-    <!-- Import and call your custom JavaScript file -->
-    <script type="module" src="./map.js"></script>
+    <div id="map-container"></div>
+
     <script type="module">
-        import { initMap } from './map.js'; // Import the function to initialize the map
-        initMap(); // Call the function to set up the map
+        import { initMap, toggleBrushing, updateMap, fetchDataFromDuckDB } from './map.js';
+
+        // Initialize the map with "Battles" checked by default
+        initMap();
+
+        // Set up the checkboxes based on initial state
+        const legendCheckboxes = document.querySelectorAll('#legend input[type="checkbox"]');
+        legendCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const selectedEventTypes = new Set(
+                    Array.from(legendCheckboxes)
+                        .filter(input => input.checked) // Only include checked checkboxes
+                        .map(input => input.value)
+                );
+
+                // Update the global `activeEventTypes` and redraw the spikes
+                updateMap(selectedEventTypes);
+            });
+        });
     </script>
 </body>
 </html>

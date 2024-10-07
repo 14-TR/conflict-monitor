@@ -2,9 +2,14 @@
 from flask import Flask, jsonify, request
 import duckdb
 import pandas as pd
+from flask import Flask
+from flask_cors import CORS
+
 
 app = Flask(__name__)
 duckdb_file_path = 'acled_data.duckdb'  # Path to your DuckDB database file
+CORS(app)  # Enable CORS for the Flask app
+
 
 @app.route('/query_data', methods=['GET'])
 def query_data():
