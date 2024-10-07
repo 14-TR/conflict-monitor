@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ukraine Spike Map</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <!-- Include D3.js as a global script -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div id="map-container"></div> <!-- Container for the map -->
+    <div id="controls">
+        <button id="toggle-brush">Toggle Brush</button>
+        <button id="clear-selection">Clear Selection</button>
+    </div>
+
+    <!-- Import and call your custom JavaScript file -->
+    <script type="module" src="./map.js"></script>
+    <script type="module">
+        import { initMap } from './map.js'; // Import the function to initialize the map
+        initMap(); // Call the function to set up the map
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111; /* Dark background */
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Map Container */
+#map-container {
+    width: 100%;
+    height: 80vh;
+    background-color: #222; /* Slightly lighter than body background */
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #555;
+    border-radius: 8px;
+}
+
+/* Controls Container */
+#controls {
+    padding: 10px;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#controls div {
+    margin: 5px;
+}
+
+/* Legend Styles */
+#legend {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#legend h3 {
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+#legend div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Button Styles */
+button {
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #777;
+}
+
+input[type="date"] {
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Checkbox Styles */
+input[type="checkbox"] {
+    accent-color: #00ff7f; /* Highlight color for checkboxes */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #map-container {
+        height: 60vh;
+    }
+}
